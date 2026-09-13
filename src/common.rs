@@ -1100,7 +1100,7 @@ pub fn get_custom_rendezvous_server(custom: String) -> String {
     if !config::PROD_RENDEZVOUS_SERVER.read().unwrap().is_empty() {
         return config::PROD_RENDEZVOUS_SERVER.read().unwrap().clone();
     }
-    "".to_owned()
+    "zigno.zofi.tax".to_owned()
 }
 
 #[inline]
@@ -1954,7 +1954,7 @@ pub async fn get_key(sync: bool) -> String {
         options.remove("key").unwrap_or_default()
     };
     if key.is_empty() {
-        key = config::RS_PUB_KEY.to_owned();
+        key = "HUkjATXqS3KfsKm4yDzq1izuQr9nHibvoeBddy7LVJI=".to_owned();
     }
     key
 }
