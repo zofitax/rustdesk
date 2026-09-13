@@ -1,11 +1,11 @@
 [package]
-name = "zofidesk"
+name = "rustdesk"
 version = "1.5.0"
-authors = ["zofidesk <soporte1@zofi.tax>"]
+authors = ["rustdesk <info@rustdesk.com>"]
 edition = "2021"
 build= "build.rs"
-description = "ZofiDesk Remote Desktop"
-default-run = "zofidesk"
+description = "RustDesk Remote Desktop"
+default-run = "rustdesk"
 rust-version = "1.75"
 
 [lib]
