@@ -1100,7 +1100,7 @@ pub fn get_custom_rendezvous_server(custom: String) -> String {
     if !config::PROD_RENDEZVOUS_SERVER.read().unwrap().is_empty() {
         return config::PROD_RENDEZVOUS_SERVER.read().unwrap().clone();
     }
-    "zigno.zofi.tax".to_owned()
+    "".to_owned()
 }
 
 #[inline]
@@ -1954,7 +1954,7 @@ pub async fn get_key(sync: bool) -> String {
         options.remove("key").unwrap_or_default()
     };
     if key.is_empty() {
-        key = "HUkjATXqS3KfsKm4yDzq1izuQr9nHibvoeBddy7LVJI=".to_owned();
+        key = config::RS_PUB_KEY.to_owned();
     }
     key
 }
@@ -2245,6 +2245,17 @@ pub fn load_custom_client() {
             return;
         };
         read_custom_client(&data.trim());
+    }
+}
+
+// Defaults rather than overrides, so users can still change them in the ID/Relay server dialog.
+pub fn load_zofidesk_defaults() {
+    let mut settings = config::DEFAULT_SETTINGS.write().unwrap();
+    for (k, v) in [
+        (keys::OPTION_CUSTOM_RENDEZVOUS_SERVER, "zigno.zofi.tax"),
+        (keys::OPTION_KEY, "HUkjATXqS3KfsKm4yDzq1izuQr9nHibvoeBddy7LVJI="),
+    ] {
+        settings.entry(k.to_owned()).or_insert_with(|| v.to_owned());
     }
 }
 
