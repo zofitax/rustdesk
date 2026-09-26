@@ -263,9 +263,22 @@ jobs:
           vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
           doNotCache: false
 
+      # x-gha no longer hits since GitHub retired the old cache API; use a files cache instead.
+      - name: Create vcpkg binary cache dir
+        run: New-Item -ItemType Directory -Force C:\vcpkg-bincache | Out-Null
+
+      - name: Cache vcpkg binaries
+        uses: actions/cache@v4
+        with:
+          path: C:\vcpkg-bincache
+          key: vcpkg-bin-${{ matrix.job.vcpkg-triplet }}-${{ env.VCPKG_COMMIT_ID }}-${{ hashFiles('vcpkg.json') }}
+          restore-keys: |
+            vcpkg-bin-${{ matrix.job.vcpkg-triplet }}-${{ env.VCPKG_COMMIT_ID }}-
+
       - name: Install vcpkg dependencies
         env:
           VCPKG_DEFAULT_HOST_TRIPLET: ${{ matrix.job.vcpkg-triplet }}
+          VCPKG_BINARY_SOURCES: "clear;files,C:/vcpkg-bincache,readwrite"
         run: |
           if ! $VCPKG_ROOT/vcpkg \
             install \
