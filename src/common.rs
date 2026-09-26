@@ -2250,6 +2250,7 @@ pub fn load_custom_client() {
 
 // Defaults rather than overrides, so users can still change them in the ID/Relay server dialog.
 pub fn load_zofidesk_defaults() {
+    *config::APP_NAME.write().unwrap() = "ZofiDesk".to_owned();
     let mut settings = config::DEFAULT_SETTINGS.write().unwrap();
     for (k, v) in [
         (keys::OPTION_CUSTOM_RENDEZVOUS_SERVER, "zigno.zofi.tax"),
