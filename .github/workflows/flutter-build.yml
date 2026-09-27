@@ -766,7 +766,6 @@ jobs:
 
 
   build-for-macOS:
-    if: false
     name: ${{ matrix.job.target }}
     runs-on: ${{ matrix.job.os }}
     needs: [generate-bridge]
@@ -926,6 +925,17 @@ jobs:
           cargo -V
           rustc -V
 
+      # iconutil only exists on macOS, so the .icns is generated here from the ZofiDesk icon.
+      - name: Generate ZofiDesk app icon
+        run: |
+          iconset="$RUNNER_TEMP/AppIcon.iconset"
+          mkdir -p "$iconset"
+          for s in 16 32 128 256 512; do
+            sips -z $s $s res/icon.png --out "$iconset/icon_${s}x${s}.png" >/dev/null
+            sips -z $((s*2)) $((s*2)) res/icon.png --out "$iconset/icon_${s}x${s}@2x.png" >/dev/null
+          done
+          iconutil -c icns "$iconset" -o flutter/macos/Runner/AppIcon.icns
+
       - name: Build rustdesk
         run: |
           if [ "${{ matrix.job.target }}" = "aarch64-apple-darwin" ]; then
@@ -943,7 +953,7 @@ jobs:
           CREATE_DMG="$(command -v create-dmg)"
           CREATE_DMG="$(readlink -f "$CREATE_DMG")"
           sed -i -e 's/MAXIMUM_UNMOUNTING_ATTEMPTS=3/MAXIMUM_UNMOUNTING_ATTEMPTS=7/' "$CREATE_DMG"
-          create-dmg --icon "RustDesk.app" 200 190 --hide-extension "RustDesk.app" --window-size 800 400 --app-drop-link 600 185 rustdesk-${{ env.VERSION }}-${{ matrix.job.arch }}.dmg ./flutter/build/macos/Build/Products/Release/RustDesk.app
+          create-dmg --icon "ZofiDesk.app" 200 190 --hide-extension "ZofiDesk.app" --window-size 800 400 --app-drop-link 600 185 rustdesk-${{ env.VERSION }}-${{ matrix.job.arch }}.dmg ./flutter/build/macos/Build/Products/Release/ZofiDesk.app
 
       - name: Upload unsigned macOS app
         if: env.UPLOAD_ARTIFACT == 'true'
@@ -966,10 +976,10 @@ jobs:
           rm -rf *.dmg || true
           # the identity secret carries its own shell quoting, so expand it inline like the dmg codesign below
           bash ./.github/scripts/sign-macos-app.sh \
-            ./flutter/build/macos/Build/Products/Release/RustDesk.app \
+            ./flutter/build/macos/Build/Products/Release/ZofiDesk.app \
             ${{ secrets.MACOS_CODESIGN_IDENTITY }} \
             ./flutter/macos/Runner/Release.entitlements
-          create-dmg --icon "RustDesk.app" 200 190 --hide-extension "RustDesk.app" --window-size 800 400 --app-drop-link 600 185 rustdesk-${{ env.VERSION }}.dmg ./flutter/build/macos/Build/Products/Release/RustDesk.app
+          create-dmg --icon "ZofiDesk.app" 200 190 --hide-extension "ZofiDesk.app" --window-size 800 400 --app-drop-link 600 185 rustdesk-${{ env.VERSION }}.dmg ./flutter/build/macos/Build/Products/Release/ZofiDesk.app
           codesign --force --options runtime -s ${{ secrets.MACOS_CODESIGN_IDENTITY }} --deep --strict rustdesk-${{ env.VERSION }}.dmg -vvv
           # notarize the rustdesk-${{ env.VERSION }}.dmg
           rcodesign notary-submit --api-key-path ${{ github.workspace }}/rustdesk.json  --staple rustdesk-${{ env.VERSION }}.dmg
