@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ZofiDesk en Mac · Ayuda</title>
+  <link rel="icon" href="../icon.png">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <img src="../icon.png" alt="">
+    <a class="brand" href="../download.html">ZofiDesk</a>
+    <nav>
+      <a href="../download.html">Descargas</a>
+      <a href="mac-permisos.html">Ayuda Mac</a>
+      <a href="../privacy.html">Privacidad</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <h1>ZofiDesk en Mac</h1>
+    <p class="lead">Cómo instalar ZofiDesk y darle los permisos que necesita para que puedan ver y controlar tu Mac.</p>
+
+    <h2 id="instalar">1. Instalar</h2>
+    <ol>
+      <li>Descarga el archivo <code>.dmg</code> para tu Mac desde la <a href="../download.html">página de descargas</a>:
+        <ul>
+          <li><strong>Apple Silicon</strong> (chips M1, M2, M3, M4, M5…): versión <code>aarch64</code>.</li>
+          <li><strong>Intel</strong>: versión <code>x86_64</code>.</li>
+        </ul>
+        Si no sabes cuál tienes, abre el menú Apple  → <strong>Acerca de este Mac</strong> y mira la línea “Chip” o “Procesador”.
+      </li>
+      <li>Abre el <code>.dmg</code> y arrastra <strong>ZofiDesk</strong> a la carpeta <strong>Aplicaciones</strong>.</li>
+    </ol>
+
+    <h2 id="abrir">2. Abrir por primera vez</h2>
+    <p>La primera vez, macOS puede mostrar un aviso indicando que no puede verificar la aplicación.</p>
+    <ol>
+      <li>Pulsa <strong>OK</strong> o <strong>Listo</strong> en el aviso.</li>
+      <li>Abre <strong>Ajustes del Sistema → Privacidad y seguridad</strong>.</li>
+      <li>Baja hasta la sección <strong>Seguridad</strong>, donde aparecerá un mensaje sobre ZofiDesk, y pulsa <strong>Abrir igualmente</strong>.</li>
+      <li>Confirma con tu contraseña o Touch ID.</li>
+    </ol>
+    <div class="note">
+      <strong>Si el aviso dice que “ZofiDesk está dañado y no puede abrirse”</strong>, abre la app <strong>Terminal</strong> (Aplicaciones → Utilidades), pega este comando, pulsa Intro y vuelve a abrir ZofiDesk:
+      <pre>xattr -cr /Applications/ZofiDesk.app</pre>
+    </div>
+
+    <h2 id="enable-permissions">3. Conceder permisos</h2>
+    <p>Para que otra persona pueda ver y controlar tu Mac, ZofiDesk necesita estos permisos. La aplicación te avisará de los que falten; el botón <strong>Configurar</strong> de cada aviso abre directamente el ajuste correspondiente.</p>
+
+    <h3>Grabación de pantalla</h3>
+    <p>Permite que se vea tu pantalla.</p>
+    <ol>
+      <li><strong>Ajustes del Sistema → Privacidad y seguridad → Grabación de pantalla y audio del sistema</strong>.</li>
+      <li>Activa <strong>ZofiDesk</strong>. Si no aparece en la lista, pulsa <strong>+</strong> y elígelo en Aplicaciones.</li>
+      <li>Si macOS lo pide, pulsa <strong>Salir y volver a abrir</strong>.</li>
+    </ol>
+
+    <h3>Accesibilidad</h3>
+    <p>Permite controlar el ratón y el teclado.</p>
+    <ol>
+      <li><strong>Ajustes del Sistema → Privacidad y seguridad → Accesibilidad</strong>.</li>
+      <li>Activa <strong>ZofiDesk</strong>.</li>
+    </ol>
+
+    <h3>Monitorización de entrada</h3>
+    <p>Necesario para que funcione correctamente el teclado remoto.</p>
+    <ol>
+      <li><strong>Ajustes del Sistema → Privacidad y seguridad → Monitorización de entrada</strong>.</li>
+      <li>Activa <strong>ZofiDesk</strong>.</li>
+    </ol>
+
+    <h3>Micrófono (opcional)</h3>
+    <p>Solo si quieres hablar con la otra persona durante la sesión: <strong>Ajustes del Sistema → Privacidad y seguridad → Micrófono</strong> y activa <strong>ZofiDesk</strong>.</p>
+
+    <h2 id="problemas">4. Si algo no funciona</h2>
+    <ul>
+      <li><strong>Se ve la pantalla pero no se puede controlar</strong>: revisa Accesibilidad y Monitorización de entrada.</li>
+      <li><strong>La otra persona ve una pantalla negra o vacía</strong>: revisa Grabación de pantalla y reinicia ZofiDesk.</li>
+      <li><strong>ZofiDesk ya está activado pero sigue sin funcionar</strong> (suele pasar después de actualizar): selecciona ZofiDesk en la lista, quítalo con el botón <strong>−</strong>, vuelve a añadirlo con <strong>+</strong> y reinicia la aplicación.</li>
+    </ul>
+    <p>¿Sigues con problemas? Escríbenos a <a href="mailto:soporte1@zofi.tax">soporte1@zofi.tax</a>.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">© 2026 zofi.tax · <a href="https://zofi.tax">zofi.tax</a></div>
+</footer>
+</body>
+</html>

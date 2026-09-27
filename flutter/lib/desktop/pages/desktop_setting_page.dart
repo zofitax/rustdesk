@@ -2554,6 +2554,14 @@ class _AboutState extends State<_About> {
                       .marginSymmetric(vertical: 4.0)),
               InkWell(
                   onTap: () {
+                    launchUrlString('https://app.zofi.tax/privacy.html');
+                  },
+                  child: Text(
+                    translate('Privacy Statement'),
+                    style: linkStyle,
+                  ).marginSymmetric(vertical: 4.0)),
+              InkWell(
+                  onTap: () {
                     launchUrlString('https://zofi.tax');
                   },
                   child: Text(

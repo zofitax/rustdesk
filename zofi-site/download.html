@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Descargar ZofiDesk</title>
+  <link rel="icon" href="icon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <img src="icon.png" alt="">
+    <a class="brand" href="download.html">ZofiDesk</a>
+    <nav>
+      <a href="download.html">Descargas</a>
+      <a href="docs/mac-permisos.html">Ayuda Mac</a>
+      <a href="privacy.html">Privacidad</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <h1>Descargar ZofiDesk</h1>
+    <p class="lead">Escritorio remoto de zofi.tax. <span id="version"></span></p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Windows</h3>
+        <p>Windows 10 y 11, 64 bits. Se puede ejecutar sin instalar o instalar desde la propia aplicación.</p>
+        <a class="btn" data-asset="x86_64\.exe$" href="#">Descargar .exe</a>
+        <a class="btn secondary" data-asset="x86_64\.msi$" href="#">.msi</a>
+      </div>
+      <div class="card">
+        <h3>Mac con Apple Silicon</h3>
+        <p>Chips M1, M2, M3, M4, M5 o posteriores.</p>
+        <a class="btn" data-asset="aarch64.*\.dmg$" href="#">Descargar .dmg</a>
+      </div>
+      <div class="card">
+        <h3>Mac con Intel</h3>
+        <p>Macs con procesador Intel.</p>
+        <a class="btn" data-asset="x86_64.*\.dmg$" href="#">Descargar .dmg</a>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>En Mac</strong>, la primera vez hay que autorizar la aplicación y darle permisos de pantalla y control. Sigue la <a href="docs/mac-permisos.html">guía para Mac</a>.
+    </div>
+
+    <h2>Antes de conectarte</h2>
+    <ul>
+      <li>Comparte tu ID y contraseña de ZofiDesk <strong>solo con personas de soporte de confianza</strong>.</li>
+      <li>zofi.tax nunca te llamará sin aviso para pedirte que instales ZofiDesk.</li>
+      <li>Consulta nuestra <a href="privacy.html">política de privacidad</a>.</li>
+    </ul>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">© 2026 zofi.tax · <a href="https://zofi.tax">zofi.tax</a></div>
+</footer>
+
+<script>
+  // Release tag the builds are published to. Asset names include the version, so they are looked up at load time.
+  const REPO = 'zofitax/rustdesk';
+  const TAG = 'zofi';
+  const releasePage = `https://github.com/${REPO}/releases/tag/${TAG}`;
+  const buttons = document.querySelectorAll('[data-asset]');
+  buttons.forEach(b => { b.href = releasePage; });
+
+  fetch(`https://api.github.com/repos/${REPO}/releases/tags/${TAG}`)
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(release => {
+      const assets = release.assets || [];
+      buttons.forEach(b => {
+        const re = new RegExp(b.dataset.asset);
+        const match = assets.find(a => re.test(a.name));
+        if (match) b.href = match.browser_download_url;
+      });
+      const exe = assets.find(a => /-(\d+\.\d+\.\d+)-/.test(a.name));
+      if (exe) document.getElementById('version').textContent = 'Versión ' + exe.name.match(/-(\d+\.\d+\.\d+)-/)[1] + '.';
+    })
+    .catch(() => {});
+</script>
+</body>
+</html>
